@@ -2,7 +2,7 @@ import ItchIoParser
 
 
 def main():
-    parser = ItchIoParser.ItchIoParser()
+    parser = ItchIoParser.ItchIoParser(10)
     games_info = parser.get_games()
     print('that\'s it')
 

@@ -35,11 +35,14 @@ class ItchIoParser:
 
             c = 1
             for link in game_links:
-                description = self._get_description(link)
-                games.append(GameInfo(link, description))
-                print('page', page + 1, 'game', c,
-                      '(printed from ItchIoParser.get_games())')
-                c += 1
+                try:
+                    description = self._get_description(link)
+                    games.append(GameInfo(link, description))
+                    print('page', page + 1, 'game', c,
+                          '(printed from ItchIoParser.get_games())')
+                    c += 1
+                except requests.exceptions.ConnectionError:
+                    continue
 
         return games
 
@@ -55,3 +58,4 @@ class ItchIoParser:
             return ' '.join(spaced_lines)
         except IndexError as e:
             raise e('Problem with link {}'.format(link))
+
