@@ -1,9 +1,20 @@
 import ItchIoParser
+import pickle
+
+
+def load_from_itch():
+    parser = ItchIoParser.ItchIoParser(20)
+    return parser.get_games()
+
+
+def load_pickled():
+    with open('SomeGamesInfo.pickle', 'rb') as games:
+        loaded = pickle.load(games)
+    return loaded
 
 
 def main():
-    parser = ItchIoParser.ItchIoParser(10)
-    games_info = parser.get_games()
+    games_info = load_pickled()
     print('that\'s it')
 
 
