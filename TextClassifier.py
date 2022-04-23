@@ -14,13 +14,28 @@ from pprint import pprint
 
 class TextClassifier:
     def __init__(self, game_info=None, text_count=1):
-        self.text_count = text_count
-        self.game_info = game_info
-        self.stop_words = stopwords.words('english')
-        self.stop_words.extend(['from', 'subject', 're', 'edu', 'use'])
+        # self.text_count = text_count - вот эта строка зачем? Не используется
+        # self.game_info = game_info
+        self.stop_words = stopwords.words('russian', 'english')
+        # self.stop_words.extend(['from', 'subject', 're', 'edu', 'use'])
+        self.stop_words.extend(
+            ['the', 'one', 'two', 'of', 'you', 'your', 'in', 'game', 'to',
+             'is', 'for', 'on', 'with', 'it', 'this', 'will', 'by', 'that',
+             'if', 'be', 'or', 'as', 'an', 'are', 'all', 'but', 'about', 'can',
+             'so', 'play', 'story', 'novel', 'from', 'out', 'he', 'she', 'not',
+             'they', 'their', 'what', 'up', 'have', 'her', 'more', 'demo',
+             'at', 'who', 'fill', 'there', 'was', 'we', 'please', 'new', 'and',
+             'features', 'music', 'content', 'version', 'me', 'my', 'like',
+             'some', 'how', 'characters', 'his', 'get', 'visual', 'other',
+             'also', 'into', 'made', 'us', 'only'])
 
-        self.papers = pd.read_csv('papers.csv')
-        self.papers = self.papers.drop(columns=['id', 'event_type', 'pdf_name'], axis=1).sample(100)
+        # Read from csv
+        # self.papers = pd.read_csv('papers.csv')
+        # self.papers = self.papers.drop(columns=['id', 'event_type', 'pdf_name'], axis=1).sample(100)
+
+        # Get pd from parameters
+        self.papers = game_info
+
         self.data_cleaning()
         self.data = self.papers.paper_text_processed.values.tolist()
 
@@ -37,10 +52,9 @@ class TextClassifier:
         делаем корпус, он дает всем словам теги и возвращает тапл с этими тегами и количеством этих тегов
         '''
 
-
     def data_cleaning(self):
         self.papers['paper_text_processed'] = \
-            self.papers['paper_text'].map(lambda x: re.sub('[,\.!?]', '', x))
+            self.papers['paper_text'].map(lambda x: re.sub('[,\.!?\n\t\r]', '', x))
 
         self.papers['paper_text_processed'] = \
             self.papers['paper_text_processed'].map(lambda x: x.lower())
@@ -65,8 +79,8 @@ class TextClassifier:
                                                num_topics=num_topics)
 
         pprint(lda_model.print_topics())
-        doc_lda = lda_model[self.corpus]
-
+        # doc_lda = lda_model[self.corpus]
+        return lda_model.print_topics()
 
 
 if __name__ == '__main__':
