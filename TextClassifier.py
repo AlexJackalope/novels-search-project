@@ -16,8 +16,9 @@ class TextClassifier:
     def __init__(self, game_info=None, text_count=1):
         # self.text_count = text_count - вот эта строка зачем? Не используется
         # self.game_info = game_info
-        self.stop_words = stopwords.words('russian', 'english')
+        self.stop_words = stopwords.words('english')
         # self.stop_words.extend(['from', 'subject', 're', 'edu', 'use'])
+        self.stop_words.extend(stopwords.words('russian'))
         self.stop_words.extend(
             ['the', 'one', 'two', 'of', 'you', 'your', 'in', 'game', 'to',
              'is', 'for', 'on', 'with', 'it', 'this', 'will', 'by', 'that',
@@ -27,7 +28,17 @@ class TextClassifier:
              'at', 'who', 'fill', 'there', 'was', 'we', 'please', 'new', 'and',
              'features', 'music', 'content', 'version', 'me', 'my', 'like',
              'some', 'how', 'characters', 'his', 'get', 'visual', 'other',
-             'also', 'into', 'made', 'us', 'only'])
+             'also', 'into', 'made', 'us', 'only', 'has', 'here', 'now', 'day',
+             'any', 'after', 'where', 'do', 'them', 're', 'help', 'just',
+             'our', 'project', 'support', 'free', 'want', 'don', 'him', 'no',
+             'make', 'll', 'warnings', 'been', 'different', 'when', 'make',
+             'every', 'available' 'each', 'first', 'own', 'left', 'right',
+             'very', 'over', 'warning', 'credits', 'chapter', 've', 'games',
+             'would', 'end', 'see', 'way', 'man', 'guide', 'find', 'time',
+             'maybe', 'something', 'things', 'through', 'take', 'high',
+             'release', 'additional', 'than', 'know', 'too', 'before', 'great',
+             'does', 'join', 'most', 'great', 'note', 'never', 'may',
+             'que', 'de', 'та'])
 
         # Read from csv
         # self.papers = pd.read_csv('papers.csv')

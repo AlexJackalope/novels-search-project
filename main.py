@@ -22,7 +22,7 @@ def main():
         'paper_text': [gi.description for gi in games_info]
     })
     classifier = TextClassifier.TextClassifier(games_info_df)
-    text_topics = classifier.trainLDA(15)
+    text_topics = classifier.trainLDA(25)
     print('that\'s it')
 
 
