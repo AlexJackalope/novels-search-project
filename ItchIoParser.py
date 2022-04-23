@@ -25,6 +25,9 @@ class ItchIoParser:
                        '(?=<div class=\"more_information_toggle)'
         self._description_block_pattern = re.compile(desc_block_r, re.DOTALL)
         self._symbols = re.compile('&[^;]+;')
+        self._image_link = re.compile(
+            r'(?<=has_image align_center" id="header"><img src=")[^"]+')
+        self._shot_link = re.compile(r'(?<=screenshot_list"><a href=")[^"]+')
 
     def get_games(self):
         games = []
@@ -36,8 +39,7 @@ class ItchIoParser:
             c = 1
             for link in game_links:
                 try:
-                    description = self._get_description(link)
-                    games.append(GameInfo(link, description))
+                    games.append(self._get_game_info(link))
                     print('page', page + 1, 'game', c,
                           '(printed from ItchIoParser.get_games())')
                     c += 1
@@ -46,10 +48,23 @@ class ItchIoParser:
 
         return games
 
-    def _get_description(self, link):
+    def _get_game_info(self, link):
+        r = requests.get(link)
+        game_page_content = r.content.decode('utf-8')
+        description = self._get_description(game_page_content)
+        image_link = self._get_image_link(game_page_content)
+        return GameInfo(link, image_link, description)
+
+    def _get_image_link(self, game_page_content):
+        main_image = self._image_link.findall(game_page_content)
+        if len(main_image) > 0:
+            return main_image[0]
+        else:
+            screenshot = self._shot_link.findall(game_page_content)
+            return screenshot[0] if len(screenshot) > 0 else ''
+
+    def _get_description(self, game_page_content):
         try:
-            r = requests.get(link)
-            game_page_content = r.content.decode('utf-8')
             block_with_description = \
                 self._description_block_pattern.findall(game_page_content)[0]
             desc_lines = \
@@ -58,4 +73,5 @@ class ItchIoParser:
             return ' '.join(spaced_lines)
         except IndexError as e:
             raise e('Problem with link {}'.format(link))
+
 
