@@ -1,10 +1,55 @@
 import ItchIoParser
+<<<<<<< Updated upstream
 
 
 def main():
     parser = ItchIoParser.ItchIoParser(10)
     games_info = parser.get_games()
     print('that\'s it')
+=======
+import TextClassifier
+import Classifier
+import Filtration
+
+
+def load_from_itch():
+    parser = ItchIoParser.ItchIoParser(20)
+    return parser.get_games()
+
+
+def load_pickled():
+    with open('SomeGamesInfo.pickle', 'rb') as games:
+        loaded = pickle.load(games)
+    return loaded
+
+
+def main():
+    games_info = load_pickled()
+    link_to_gi = {gi.link: gi for gi in games_info}
+    games_info_df = pd.DataFrame(data={
+        'paper_text': [gi.description for gi in games_info],
+        'link': [gi.link for gi in games_info]
+    })
+
+    # classifier = TextClassifier.TextClassifier(games_info_df)
+    # text_topics = classifier.trainLDA(15)
+
+    classifier = Classifier.Classifier(games_info_df)
+    pop_tags_to_links = classifier.get_tags()
+    # print(pop_tags_to_links)
+    filtration = Filtration.Filtration(pop_tags_to_links)
+    print(filtration.find_perfect_match("release", "everyone"))
+
+
+    ## Classifier:
+    ## сделать приведение к начальной форме
+    ## попробовать вытащить биграммы как теги
+    # сделать фильтрацию по тегам (пользователь указывает один или несколько тегов и получает список игр в порядке убывания приоритета (вдруг подходящих игр не окажется вообще, пустой список будет грустным))
+    # сделать словарь пользовательских альбомов
+    # посчитать какие теги/игры часто используются вместе с данной игрой
+
+    print('this is this, that\'s that')
+>>>>>>> Stashed changes
 
 
 if __name__ == '__main__':
