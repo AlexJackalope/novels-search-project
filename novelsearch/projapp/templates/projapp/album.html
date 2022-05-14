@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ album_name }}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'projapp/styles.css' %}" />
+</head>
+<body>
+<div>
+    <h1 class="title">{{ album_name }}</h1>
+    <div class="novels-list">
+        {% for game_info in games %}
+        <a href={{ game_info.link }}>
+            <img width="30%" margin="10px" src={{ game_info.image_link }}>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

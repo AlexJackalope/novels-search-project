@@ -3,23 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Novels search</title>
-    <link rel="stylesheet" href="styles.css">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'projapp/styles.css' %}" />
 </head>
 <body>
 
 <form method='post' display="inline-block" class="tags">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ tag_form.as_p }}
     <input type='submit' value='submit'>
 </form>
 
 <div>
-{% for game_info in games %}
+    <h2>Albums</h2>
+    {% for album in albums %}
+    <a href="{% url 'album' album %}">{{ album }}</a><br/>
+    {% endfor %}
+</div>
+
+<div class="novels-list">
+    {% for game_info in games %}
     <a href={{ game_info.link }}>
           <img width="30%" margin="10px" src={{ game_info.image_link }}>
     </a>
-{% endfor %}
+    {% endfor %}
 </div>
-<p>{{ info }}</p>
 </body>
 </html>
