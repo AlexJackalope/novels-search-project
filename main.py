@@ -1,9 +1,8 @@
 import pickle
 import pandas as pd
-
 import ItchIoParser
-import TextClassifier
 import Classifier
+import Filtration
 
 
 def load_from_itch():
@@ -24,13 +23,10 @@ def main():
         'paper_text': [gi.description for gi in games_info],
         'link': [gi.link for gi in games_info]
     })
-
-    # classifier = TextClassifier.TextClassifier(games_info_df)
-    # text_topics = classifier.trainLDA(15)
-
     classifier = Classifier.Classifier(games_info_df)
     pop_tags_to_links = classifier.get_tags()
-
+    filtration = Filtration.Filtration(pop_tags_to_links)
+    print(filtration.find_perfect_match("release", "everyone"))
 
     ## Classifier:
     ## сделать приведение к начальной форме
