@@ -1,3 +1,15 @@
+body {
+  background-color: #f3d4d1;
+}
+
+.info-block {
+  display: inline-block;
+  border-radius: 25px;
+  margin: 15px;
+  padding: 10px;
+  background-color: #ddb0ad;
+}
+
 .tags div{
     width = 30px
 }
@@ -7,4 +19,33 @@
 }
 
 .novels-list {
+}
+
+#id_Tags div {
+  display: inline-block;
+}
+
+.novel-img {
+  background-color: #657a6b;
+  width: 30%;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 25px;
+}
+
+.button {
+  background-color: #657a6b;
+  border: none;
+  border-radius: 25px;
+  color: #f3d4d1;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.button:hover {
+  background-color: #e3e3db;
+  color: #a57b7c;
 }

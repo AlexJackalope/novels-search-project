@@ -9,10 +9,10 @@
 <body>
 <div>
     <h1 class="title">{{ album_name }}</h1>
-    <div class="novels-list">
+    <div class="novels-list info-block">
         {% for game_info in games %}
         <a href={{ game_info.link }}>
-            <img width="30%" margin="10px" src={{ game_info.image_link }}>
+            <img class="novel-img" src={{ game_info.image_link }}>
         </a>
         {% endfor %}
     </div>
